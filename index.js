@@ -30,8 +30,11 @@ app.get('/players', (req, res) => {
 app.get('/db', async (req, res) => {
     try {
         const client = await pool.connect();
-        const results = await client.query('SELECT * FROM test_table');
+        const result = await client.query('SELECT * FROM test_table');
         //const results = { 'results': (result) ? result.rows : null };
+        const results = {
+            'data': result
+        }
         res.render('pages/db', {
             results: results
         });
