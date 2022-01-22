@@ -36,7 +36,7 @@ app.get('/db', async (req, res) => {
 app.get('/dbcreate', async (req, res) => {
     try {
         const client = await pool.connect();
-        await client.query('CREATE TABLE IF NOT EXISTS test_table(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(40), team VARCHAR(60), pointsPerGame INTEGER)');
+        await client.query('CREATE TABLE IF NOT EXISTS test_table(id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name VARCHAR(255), team VARCHAR(255), pointsPerGame INTEGER)');
         res.send("Table created successfully");
         client.release();
     } catch (err) {
