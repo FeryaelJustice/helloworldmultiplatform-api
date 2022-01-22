@@ -57,7 +57,7 @@ app.get('/dbcreate', async (req, res) => {
 app.get('/dbinsert', async (req, res) => {
     try {
         const client = await pool.connect();
-        await client.query('INSERT INTO test_table(name, team, pointsPerGame) VALUES (test_name, test_team, 1)');
+        await client.query('INSERT INTO test_table(name, team, pointsPerGame) VALUES (\'test_name\', \'test_team\', 1)');
         res.send("Row inserted successfully");
         client.release();
     } catch (err) {
