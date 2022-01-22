@@ -15,15 +15,15 @@ app.use(bodyParser.json());
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-app.get('/', (res) => {
+app.get('/', (req, res) => {
     res.send('Hello World!');
 })
 
-app.get('/players', (res) => {
+app.get('/players', (req, res) => {
     res.send(data);
 })
 
-app.get('/db', async (res) => {
+app.get('/db', async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM test_table');
@@ -36,7 +36,7 @@ app.get('/db', async (res) => {
     }
 })
 
-app.get('/dbcreate', async (res) => {
+app.get('/dbcreate', async (req, res) => {
     try {
         const client = await pool.connect();
         await client.query('CREATE TABLE IF NOT EXISTS test_table(id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name VARCHAR(255), team VARCHAR(255), pointsPerGame INTEGER)');
@@ -48,7 +48,7 @@ app.get('/dbcreate', async (res) => {
     }
 })
 
-app.get('/dbinsert', async (res) => {
+app.get('/dbinsert', async (req, res) => {
     try {
         const client = await pool.connect();
         await client.query('INSERT INTO test_table(name, team, pointsPerGame) VALUES (test_name, test_team, 1)');
