@@ -19,6 +19,10 @@ app.get('/', (req, res) => {
     res.render('pages/home');
 })
 
+app.get('/about', (req, res) => {
+    res.render('pages/about');
+})
+
 app.get('/players', (req, res) => {
     res.send(data);
 })
