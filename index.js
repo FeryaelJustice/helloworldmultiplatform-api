@@ -12,20 +12,23 @@ app.use("/", router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res, next) => {
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+app.get('/', (res) => {
     res.send('Hello World!');
 })
 
-app.get('/players', (req, res, next) => {
+app.get('/players', (res) => {
     res.send(data);
 })
 
-app.get('/db', async (req, res) => {
+app.get('/db', async (res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM test_table');
         const results = { 'results': (result) ? result.rows : null };
-        res.render('pages/db', results);
+        res.render('pages/db', data: results);
         client.release();
     } catch (err) {
         console.error(err);
@@ -33,11 +36,23 @@ app.get('/db', async (req, res) => {
     }
 })
 
-app.get('/dbcreate', async (req, res) => {
+app.get('/dbcreate', async (res) => {
     try {
         const client = await pool.connect();
         await client.query('CREATE TABLE IF NOT EXISTS test_table(id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name VARCHAR(255), team VARCHAR(255), pointsPerGame INTEGER)');
         res.send("Table created successfully");
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+})
+
+app.get('/dbinsert', async (res) => {
+    try {
+        const client = await pool.connect();
+        await client.query('INSERT INTO test_table(name, team, pointsPerGame) VALUES (test_name, test_team, 1)');
+        res.send("Row inserted successfully");
         client.release();
     } catch (err) {
         console.error(err);
