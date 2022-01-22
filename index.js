@@ -33,7 +33,7 @@ app.get('/db', async (req, res) => {
     }
 })
 
-app.post('/dbcreate', (req, res) => {
+app.post('/dbcreate', async (req, res) => {
     try {
         const client = await pool.connect();
         await client.query('CREATE TABLE IF NOT EXISTS test_table(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(40), team VARCHAR(60), pointsPerGame INTEGER)');
