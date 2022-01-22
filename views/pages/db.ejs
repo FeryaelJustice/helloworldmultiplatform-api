@@ -11,19 +11,7 @@
         <%- include('../partials/header'); %>
     </header>
     <main>
-        <ul>
-            <% results.data.forEach(function(result) { %>
-                <li>
-                    _
-                    <strong>
-                        <%= result.name %>
-                            <%= result.team %>
-                                <%= result.pointsPerGame %>
-                    </strong>
-                    _
-                </li>
-                <% }); %>
-        </ul>>
+        <%= results %>
 </body>
 </main>
 
